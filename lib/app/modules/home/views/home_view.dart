@@ -1,5 +1,7 @@
 import 'package:delivery_app/app/core/helper/app_widgets.dart';
 import 'package:delivery_app/app/core/style/app_colors.dart';
+import 'package:delivery_app/app/routes/app_pages.dart';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,14 +13,6 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    int todayWeekday = now.weekday % 7;
-    DateTime startOfWeek = now.subtract(Duration(days: todayWeekday));
-    List<DateTime> weekDays = List.generate(
-      7,
-      (i) => startOfWeek.add(Duration(days: i)),
-    );
-
     return Scaffold(
       backgroundColor: AppColors.secondaryColor,
       body: SingleChildScrollView(
@@ -32,48 +26,25 @@ class HomeView extends GetView<HomeController> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              color: AppColors.primaryColor,
+              color: AppColors.secondaryColor,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 18,
                   horizontal: 8,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.white, width: 2),
-                          ),
-                          child: Center(
-                            child: Text(
-                              now.day.toString(),
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 6),
-                        Text(
-                          ['S', 'M', 'T', 'W', 'T', 'F', 'S'][now.weekday % 7],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                child: EasyDateTimeLine(
+                  initialDate: DateTime.now(),
+
+                  headerProps: EasyHeaderProps(showHeader: false),
+
+                  timeLineProps: EasyTimeLineProps(),
+                  onDateChange: (selectedDate) {},
+                  activeColor: AppColors.primaryColor,
+
+                  dayProps: const EasyDayProps(
+                    todayHighlightStyle: TodayHighlightStyle.withBackground,
+                    todayHighlightColor: AppColors.primaryAccentColor,
+                  ),
                 ),
               ),
             ),
@@ -218,33 +189,42 @@ class HomeView extends GetView<HomeController> {
             AppWidgets().gapH16(),
 
             // Your Order Card
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 18,
-                  horizontal: 16,
+            InkWell(
+              onTap: () => Get.toNamed(Routes.ORDERS),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.shopping_bag,
-                      color: AppColors.primaryColor,
-                      size: 28,
-                    ),
-                    SizedBox(width: 12),
-                    Text(
-                      'Your Order',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 30,
+                    horizontal: 16,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.shopping_bag,
+                        color: AppColors.primaryColor,
+                        size: 28,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 12),
+                      Text(
+                        'Your Order',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.primaryColor,
+                        size: 28,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

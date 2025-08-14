@@ -32,6 +32,7 @@ dependencies:
   pinput:
   timeline_tile:
   flutter_dotenv:
+  easy_date_timeline: ^2.0.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
