@@ -1,23 +1,18 @@
-import 'package:get/get.dart';
+import 'package:delivery_app/app/data/model/order/order_data_response.dart';
+  import 'package:delivery_app/app/data/repository/order/order_repository.dart';
+  import 'package:get/get.dart';
 
-class OrdersController extends GetxController {
-  //TODO: Implement OrdersController
+  class OrdersController extends GetxController {
+    final orderList = <OrderData>[].obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+    @override
+    void onInit() {
+      super.onInit();
+      getOrderList();
+    }
+
+    Future<void> getOrderList() async {
+      var response = await OrderRepository().getOrderData();
+      orderList.addAll(response.data?? []);
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
-}

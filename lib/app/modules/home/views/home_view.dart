@@ -190,7 +190,16 @@ class HomeView extends GetView<HomeController> {
 
             // Your Order Card
             InkWell(
-              onTap: () => Get.toNamed(Routes.ORDERS),
+              onTap: () => {
+                if(controller.deliveryStatus.value){
+                  Get.toNamed(Routes.ORDERS),
+                } else {
+                  AppWidgets().getSnackBar(
+                    message: 'Please enable delivery status first.',
+
+                  ),
+                }
+              },
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(

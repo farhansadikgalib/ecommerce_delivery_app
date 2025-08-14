@@ -15,6 +15,9 @@ class ApiEndPoints {
   //delivery status
 
 
+//order data
+  static String orderData = "delivery/all-order-list-paginated?page=1&search=&paginate=20";
+  //order data
 
 
 }
