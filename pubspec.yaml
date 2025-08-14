@@ -1,0 +1,47 @@
+name: delivery_app
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  get:
+  dio:
+  flutter_easyloading:
+  flutter_screenutil:
+  google_fonts:
+  logger:
+  connectivity_plus: ^4.0.2
+  url_launcher:
+  shared_value:
+  intl:
+  any_image_view:
+  easy_debounce:
+  font_awesome_flutter:
+  flutter_spinkit:
+  skeletonizer: ^2.0.1
+  dropdown_search:
+  animations:
+  pinput:
+  timeline_tile:
+  flutter_dotenv:
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
+    - assets/
+    - assets/png/
+
