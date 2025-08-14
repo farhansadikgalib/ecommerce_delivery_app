@@ -1,23 +1,22 @@
+import 'package:delivery_app/app/core/helper/app_widgets.dart';
+import 'package:delivery_app/app/data/repository/home/home_repository.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  final deliveryStatus = false.obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  Future<void> setDeliveryStatus() async {
+    int status = deliveryStatus.value == true ? 1 : 0;
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+    var response = await HomeRepository().userStatus(status.toString());
 
-  void increment() => count.value++;
+    if (response.status == 'success') {
+      AppWidgets().getSnackBar(message: response.message);
+    }
+  }
 }
