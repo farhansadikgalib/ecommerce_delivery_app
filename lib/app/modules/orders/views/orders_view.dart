@@ -1,3 +1,4 @@
+import 'package:delivery_app/app/core/style/app_colors.dart';
 import 'package:delivery_app/app/core/widget/global_appbar.dart';
                                                         import 'package:flutter/material.dart';
                                                         import 'package:get/get.dart';
@@ -48,7 +49,7 @@ import 'package:url_launcher/url_launcher.dart';
                                                                             InkWell(
                                                                               onTap: () async {
                                                                                 final mobile = order.billingAddress?.mobile;
-                                                                                  final uri = Uri.parse('tel:${int.parse(mobile!)}');
+                                                                                  final uri = Uri.parse('tel:$mobile');
                                                                                   if (await canLaunchUrl(uri)) {
                                                                                     await launchUrl(uri);
 
@@ -102,7 +103,7 @@ import 'package:url_launcher/url_launcher.dart';
                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
                                                                                 Text(
-                                                                                  '৳${order.total}',
+                                                                                  'Total: ৳${order.total}',
                                                                                   style: const TextStyle(
                                                                                     color: Colors.green,
                                                                                     fontWeight: FontWeight.bold,
@@ -114,7 +115,7 @@ import 'package:url_launcher/url_launcher.dart';
                                                                                     // Show order details
                                                                                   },
                                                                                   style: TextButton.styleFrom(
-                                                                                    backgroundColor: Colors.orangeAccent,
+                                                                                    backgroundColor: AppColors.primaryColor,
                                                                                     foregroundColor: Colors.white,
                                                                                     shape: RoundedRectangleBorder(
                                                                                       borderRadius: BorderRadius.circular(8),
