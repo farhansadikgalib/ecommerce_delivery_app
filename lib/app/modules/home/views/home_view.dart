@@ -220,7 +220,61 @@ class HomeView extends GetView<HomeController> {
                       ),
                       SizedBox(width: 12),
                       Text(
-                        'Your Order',
+                        'Pending Orders',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.primaryColor,
+                        size: 28,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            AppWidgets().gapH16(),
+
+
+
+            // Your Order Card
+            InkWell(
+              onTap: () => {
+                if(controller.deliveryStatus.value){
+                  Get.toNamed(Routes.TRANSACTIONS),
+                } else {
+                  AppWidgets().getSnackBar(
+                    message: 'Please enable delivery status first.',
+
+                  ),
+                }
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 30,
+                    horizontal: 16,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.shopping_bag,
+                        color: AppColors.primaryColor,
+                        size: 28,
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        'Transaction History',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,

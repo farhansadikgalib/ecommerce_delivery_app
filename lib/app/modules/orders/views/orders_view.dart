@@ -112,7 +112,13 @@ import 'package:url_launcher/url_launcher.dart';
                                                                                 ),
                                                                                 TextButton(
                                                                                   onPressed: () {
-                                                                                    // Show order details
+                                                                                    if(order.verifyStatus=='0'){
+                                                                                      controller.setStatus(order.id.toString(), '1', '', '');
+                                                                                    }
+                                                                                    if(order.verifyStatus=='1'){
+                                                                                      controller.setStatus(order.id.toString(), '2', '', '');
+                                                                                    }
+
                                                                                   },
                                                                                   style: TextButton.styleFrom(
                                                                                     backgroundColor: AppColors.primaryColor,
@@ -121,8 +127,13 @@ import 'package:url_launcher/url_launcher.dart';
                                                                                       borderRadius: BorderRadius.circular(8),
                                                                                     ),
                                                                                   ),
-                                                                                  child: const Text('View Details'),
-                                                                                ),
+                                                                                  child: Text(
+                                                                                    order.verifyStatus == '0'
+                                                                                        ? 'Get Products'
+                                                                                        : order.verifyStatus == '1'
+                                                                                        ? 'Pick Up'
+                                                                                        : '',
+                                                                                  ),                                                                                ),
                                                                               ],
                                                                             ),
                                                                           ],

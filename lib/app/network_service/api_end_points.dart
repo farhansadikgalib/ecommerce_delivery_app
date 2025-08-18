@@ -17,6 +17,8 @@ class ApiEndPoints {
 
 //order data
   static String orderData = "delivery/all-order-list-paginated?page=1&search=&paginate=20";
+  static String orderStatus({required String orderId}) =>
+      "delivery/order-delivery-status/$orderId";
   //order data
 
 
