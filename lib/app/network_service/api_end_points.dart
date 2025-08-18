@@ -21,5 +21,9 @@ class ApiEndPoints {
       "delivery/order-delivery-status/$orderId";
   //order data
 
+  //transaction data
+  static String transactionData = "delivery/all-delivery-transaction-list";
+  //transaction data
+
 
 }

@@ -1,23 +1,22 @@
+import 'package:delivery_app/app/core/helper/app_widgets.dart';
+import 'package:delivery_app/app/data/model/transaction/transaction_data_response.dart';
+import 'package:delivery_app/app/data/repository/transaction/transaction_repository.dart';
 import 'package:get/get.dart';
 
 class TransactionsController extends GetxController {
-  //TODO: Implement TransactionsController
+  final transactionList = <TransactionData>[].obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    getTransactionList();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> getTransactionList() async {
+    transactionList.clear();
+    var response = await TransactionRepository().getTransactionData();
+    transactionList.addAll(response.data ?? []);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
-  void increment() => count.value++;
 }
