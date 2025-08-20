@@ -16,13 +16,16 @@ class ApiEndPoints {
 
 
 //order data
-  static String orderData = "delivery/all-order-list-paginated?page=1&search=&paginate=20";
+  static String orderData = "delivery/all-pending-order-list-paginated?page=1&search"
+      "=&paginate=20";
   static String orderStatus({required String orderId}) =>
       "delivery/order-delivery-status/$orderId";
   //order data
 
   //transaction data
-  static String transactionData = "delivery/all-delivery-transaction-list";
+  static String transactionData = "delivery/all-order-list-paginated?page=1&search=&paginate=20";
+  static String transferToCompany({required String orderId}) =>
+      "delivery/payment-transfer-to-company/$orderId";
   //transaction data
 
 

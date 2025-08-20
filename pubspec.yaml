@@ -26,7 +26,7 @@ dependencies:
   easy_debounce:
   font_awesome_flutter:
   flutter_spinkit:
-  skeletonizer: ^2.0.1
+  skeletonizer: ^2.1.0+1
   dropdown_search:
   animations:
   pinput:
@@ -45,4 +45,3 @@ flutter:
     - .env
     - assets/
     - assets/png/
-

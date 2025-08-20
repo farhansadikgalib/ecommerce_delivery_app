@@ -5,7 +5,7 @@ import '../../../network_service/api_end_points.dart';
 import '../../model/order/order_data_response.dart';
 
 class OrderRepository {
-  Future<DelieveryOrderResponse> getOrderData() async {
+  Future<DeliveryOrderResponse> getOrderData() async {
     var response = await ApiClient().get(
       ApiEndPoints.orderData,
       getOrderData,
@@ -13,21 +13,25 @@ class OrderRepository {
       isLoaderRequired: true,
     );
 
-    return delieveryOrderResponseFromJson(response.toString());
+    return deliveryOrderResponseFromJson(response.toString());
   }
 
-  Future<OrderStatusResponse> setOrderStatus(String orderId,String
-  deliveryStatus,String reason,String amount) async {
+  Future<OrderStatusResponse> setOrderStatus(
+    String orderId,
+    String deliveryStatus,
+    String reason,
+    String amount,
+  ) async {
     var response = await ApiClient().post(
       ApiEndPoints.orderStatus(orderId: orderId),
       {
         'delivery_status': deliveryStatus,
-        'delivery_reject_reason':reason,
-        'paid_amount': amount
+        'paid_amount': amount,
+        if (deliveryStatus == '4') 'delivery_reject_reason': reason,
       },
       setOrderStatus,
       isHeaderRequired: true,
-      isLoaderRequired: true,
+      isLoaderRequired: false,
     );
 
     return orderStatusResponseFromJson(response.toString());

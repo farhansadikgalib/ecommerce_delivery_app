@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-DelieveryOrderResponse delieveryOrderResponseFromJson(String str) => DelieveryOrderResponse.fromJson(json.decode(str));
+DeliveryOrderResponse deliveryOrderResponseFromJson(String str) => DeliveryOrderResponse.fromJson(json.decode(str));
 
-String delieveryOrderResponseToJson(DelieveryOrderResponse data) => json.encode(data.toJson());
+String deliveryOrderResponseToJson(DeliveryOrderResponse data) => json.encode(data.toJson());
 
-class DelieveryOrderResponse {
+class DeliveryOrderResponse {
   int? currentPage;
   List<OrderData>? data;
   String? firstPageUrl;
@@ -20,7 +20,7 @@ class DelieveryOrderResponse {
   int? total;
   dynamic search;
 
-  DelieveryOrderResponse({
+  DeliveryOrderResponse({
     this.currentPage,
     this.data,
     this.firstPageUrl,
@@ -37,7 +37,7 @@ class DelieveryOrderResponse {
     this.search,
   });
 
-  factory DelieveryOrderResponse.fromJson(Map<String, dynamic> json) => DelieveryOrderResponse(
+  factory DeliveryOrderResponse.fromJson(Map<String, dynamic> json) => DeliveryOrderResponse(
     currentPage: json["current_page"],
     data: json["data"] == null ? [] : List<OrderData>.from(json["data"]!.map((x) => OrderData.fromJson(x))),
     firstPageUrl: json["first_page_url"],
