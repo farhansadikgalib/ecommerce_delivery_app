@@ -50,8 +50,8 @@ class OrdersController extends GetxController {
       isLoading.value = true;
       page = 1;
       hasMoreData.value = true;
-      var response = await OrderRepository().getPendingOrderData(page);
       orderList.clear();
+      var response = await OrderRepository().getPendingOrderData(page);
       orderList.addAll(response.data ?? []);
 
       // Check if there's more data (assuming 20 items per page based on API)

@@ -23,7 +23,7 @@ class TransactionRepository {
     var response = await ApiClient().post(
       ApiEndPoints.transferToCompany(orderId: orderId),
       {
-        'transfer_to_company': amount,
+        'transfer_to_company': 1,
       },
       transferAmount,
       isHeaderRequired: true,

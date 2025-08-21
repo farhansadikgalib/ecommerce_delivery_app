@@ -35,8 +35,9 @@ class AllOrdersController extends GetxController {
       isLoading.value = true;
       page = 1;
       hasMoreData.value = true;
-      var response = await OrderRepository().getAllOrderData(page);
       orderList.clear();
+      var response = await OrderRepository().getAllOrderData(page);
+
       orderList.addAll(response.data ?? []);
 
       // Check if there's more data
@@ -44,7 +45,9 @@ class AllOrdersController extends GetxController {
         hasMoreData.value = false;
       }
     } catch (e) {
-      AppWidgets().getSnackBar(message: 'Error loading orders: ${e.toString()}');
+      AppWidgets().getSnackBar(
+        message: 'Error loading orders: ${e.toString()}',
+      );
     } finally {
       isLoading.value = false;
     }
@@ -71,7 +74,9 @@ class AllOrdersController extends GetxController {
       }
     } catch (e) {
       page--; // Revert page increment on error
-      AppWidgets().getSnackBar(message: 'Error loading more orders: ${e.toString()}');
+      AppWidgets().getSnackBar(
+        message: 'Error loading more orders: ${e.toString()}',
+      );
     } finally {
       isLoadingMore.value = false;
     }
