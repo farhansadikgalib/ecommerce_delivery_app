@@ -23,7 +23,7 @@ class ApiEndPoints {
   //order data
 
   //transaction data
-  static String transactionData = "delivery/all-order-list-paginated?page=1&search=&paginate=20";
+  static String transactionData = "delivery/all-delivery-transaction-list?page=1&search=&paginate=20";
   static String transferToCompany({required String orderId}) =>
       "delivery/payment-transfer-to-company/$orderId";
   //transaction data

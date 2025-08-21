@@ -116,77 +116,14 @@ class TransactionsView extends GetView<TransactionsController> {
               'Transaction #${transaction.id}',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            const SizedBox(height: 6),
-            InkWell(
-              onTap: () async {
-                final mobile = transaction.billingAddress?.mobile;
-                if (mobile != null && mobile.isNotEmpty) {
-                  final uri = Uri.parse('tel:$mobile');
-                  if (await canLaunchUrl(uri)) {
-                    await launchUrl(uri);
-                  }
-                }
-              },
-              child: Text(
-                '${transaction.billingAddress?.fullName ?? ""} • ${transaction.billingAddress?.mobile ?? ""}',
-                style: const TextStyle(fontSize: 14, color: Colors.black87),
-              ),
-            ),
             Text(
-              transaction.billingAddress?.address ?? "",
-              style: const TextStyle(fontSize: 13, color: Colors.grey),
+              'SaleCode #${transaction.saleId}',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            const Divider(height: 20),
-            ...?transaction.saleProducts?.map(
-              (item) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        color: Colors.grey[200],
-                        child: const Icon(
-                          Icons.image,
-                          size: 24,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.productName.toString(),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            softWrap: true,
-                          ),
-                          Text(
-                            'x${item.quantity} • ৳${item.price}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.green,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
             Row(
               children: [
                 Text(
-                  'Total: ৳${transaction.total ?? "0"}',
+                  'Total: ৳${transaction.receiveAmount ?? "0"}',
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
@@ -194,31 +131,36 @@ class TransactionsView extends GetView<TransactionsController> {
                   ),
                 ),
                 const Spacer(),
-                if (transaction.deliveryStatus == '3')
-                  TextButton(
-                    onPressed: () {
+                TextButton(
+                  onPressed: () {
+                    if(transaction.transferToCompany=='0'){
                       controller.transferAmount(
                         transaction.id.toString(),
-                        transaction.total ?? "0",
+                        transaction.receiveAmount ?? "0",
                       );
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.deepOrangeAccent,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
+                    }
+
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: transaction.transferToCompany=='0'? Colors
+                        .deepOrangeAccent: Colors.grey,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Text(
-                      'Transfer',
-                      style: TextStyle(fontSize: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
                     ),
                   ),
+                  child: const Text('Transfer', style: TextStyle(fontSize: 12)),
+                ),
               ],
+            ),
+
+            Text(
+              'Date ${transaction.sale!.saleDate}',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ],
         ),

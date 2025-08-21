@@ -48,7 +48,7 @@ class AuthHelper {
 
   }
 
-  void loadItems() {
+   loadItems() {
     isLoggedIn.load();
     accessToken.load();
     userName.load();
