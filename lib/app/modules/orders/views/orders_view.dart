@@ -13,7 +13,7 @@ class OrdersView extends GetView<OrdersController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: globalAppBar(context, 'Your Orders'),
+      appBar: globalAppBar(context, 'Your Pending Orders'),
       body: Obx(() {
         final orders = controller.orderList;
         final isLoading = controller.isLoading.value;
@@ -53,11 +53,49 @@ class OrdersView extends GetView<OrdersController> {
           child: RefreshIndicator(
             onRefresh: controller.getOrderList,
             child: ListView.builder(
+              controller: controller.scrollController,
               padding: const EdgeInsets.all(12),
-              itemCount: orders.length,
+              itemCount: orders.length + (controller.hasMoreData.value ? 1 : 0),
               itemBuilder: (context, index) {
-                final order = orders[index];
-                return _buildOrderCard(context, order);
+                if (index < orders.length) {
+                  final order = orders[index];
+                  return Skeletonizer(
+                    enabled: isLoading && orders.isNotEmpty,
+                    child: _buildOrderCard(context, order),
+                  );
+                } else {
+                  // Loading indicator for pagination
+                  return Obx(() {
+                    if (controller.isLoadingMore.value) {
+                      return Container(
+                        padding: const EdgeInsets.all(16),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    } else if (controller.hasMoreData.value) {
+                      return Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Center(
+                          child: TextButton(
+                            onPressed: controller.loadMoreOrders,
+                            child: const Text('Load More'),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        padding: const EdgeInsets.all(16),
+                        child: const Center(
+                          child: Text(
+                            'No more orders to load',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      );
+                    }
+                  });
+                }
               },
             ),
           ),
@@ -364,32 +402,32 @@ class OrdersView extends GetView<OrdersController> {
                 onPressed: controller.selectedReason.value == null
                     ? null
                     : () {
-                        String reason =
-                            controller.selectedReason.value == 'Other'
-                            ? controller.customReasonController.text.trim()
-                            : controller.selectedReason.value!;
+                  String reason =
+                  controller.selectedReason.value == 'Other'
+                      ? controller.customReasonController.text.trim()
+                      : controller.selectedReason.value!;
 
-                        if (controller.selectedReason.value == 'Other' &&
-                            reason.isEmpty) {
-                          Get.snackbar(
-                            'Error',
-                            'Please specify a reason',
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                          );
-                          return;
-                        }
+                  if (controller.selectedReason.value == 'Other' &&
+                      reason.isEmpty) {
+                    Get.snackbar(
+                      'Error',
+                      'Please specify a reason',
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                    );
+                    return;
+                  }
 
-                        controller.setStatus(
-                          order.id.toString(),
-                          '4',
-                          reason,
-                          '',
-                        );
-                        controller.resetDialogState();
-                        Navigator.of(context).pop();
-                      },
+                  controller.setStatus(
+                    order.id.toString(),
+                    '4',
+                    reason,
+                    '',
+                  );
+                  controller.resetDialogState();
+                  Navigator.of(context).pop();
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,

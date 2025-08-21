@@ -5,9 +5,9 @@ import '../../../network_service/api_end_points.dart';
 import '../../model/order/order_status_response.dart';
 
 class TransactionRepository {
-  Future<TransactionResponse> getTransactionData() async {
+  Future<TransactionResponse> getTransactionData(int page) async {
     var response = await ApiClient().get(
-      ApiEndPoints.transactionData,
+      ApiEndPoints.transactionData(page: page.toString()),
       getTransactionData,
       isHeaderRequired: true,
       isLoaderRequired: true,
@@ -22,7 +22,9 @@ class TransactionRepository {
   ) async {
     var response = await ApiClient().post(
       ApiEndPoints.transferToCompany(orderId: orderId),
-      {'transfer_to_company': '1'},
+      {
+        'transfer_to_company': amount,
+      },
       transferAmount,
       isHeaderRequired: true,
       isLoaderRequired: false,

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class TransactionsController extends GetxController {
   final transactionList = <TransactionData>[].obs;
   final isLoading = false.obs;
+  int page = 1;
 
   @override
   void onInit() {
@@ -17,7 +18,7 @@ class TransactionsController extends GetxController {
     try {
       isLoading.value = true;
       transactionList.clear();
-      var response = await TransactionRepository().getTransactionData();
+      var response = await TransactionRepository().getTransactionData(page);
       transactionList.addAll(response.data ?? []);
     } catch (e) {
       AppWidgets().getSnackBar(message: 'Error loading transactions: ${e.toString()}');

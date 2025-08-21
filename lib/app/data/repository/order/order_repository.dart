@@ -5,10 +5,20 @@ import '../../../network_service/api_end_points.dart';
 import '../../model/order/order_data_response.dart';
 
 class OrderRepository {
-  Future<DeliveryOrderResponse> getOrderData() async {
+  Future<DeliveryOrderResponse> getPendingOrderData(int page) async {
     var response = await ApiClient().get(
-      ApiEndPoints.orderData,
-      getOrderData,
+      ApiEndPoints.pendingOrderData(page: page.toString()),
+      getPendingOrderData,
+      isHeaderRequired: true,
+      isLoaderRequired: true,
+    );
+
+    return deliveryOrderResponseFromJson(response.toString());
+  }
+  Future<DeliveryOrderResponse> getAllOrderData(int page) async {
+    var response = await ApiClient().get(
+      ApiEndPoints.allOrderData(page: page.toString()),
+      getAllOrderData,
       isHeaderRequired: true,
       isLoaderRequired: true,
     );

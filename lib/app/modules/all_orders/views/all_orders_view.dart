@@ -46,18 +46,53 @@ class AllOrdersView extends GetView<AllOrdersController> {
           );
         }
 
-        return Skeletonizer(
-          enabled: isLoading && orders.isNotEmpty,
-          child: RefreshIndicator(
-            onRefresh: controller.getOrderList,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: orders.length,
-              itemBuilder: (context, index) {
+        return RefreshIndicator(
+          onRefresh: controller.getOrderList,
+          child: ListView.builder(
+            controller: controller.scrollController,
+            padding: const EdgeInsets.all(12),
+            itemCount: orders.length + (controller.hasMoreData.value ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index < orders.length) {
                 final order = orders[index];
-                return _buildOrderCard(context, order);
-              },
-            ),
+                return Skeletonizer(
+                  enabled: isLoading && orders.isNotEmpty,
+                  child: _buildOrderCard(context, order),
+                );
+              } else {
+                // Loading indicator for pagination
+                return Obx(() {
+                  if (controller.isLoadingMore.value) {
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else if (controller.hasMoreData.value) {
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Center(
+                        child: TextButton(
+                          onPressed: controller.loadMoreOrders,
+                          child: const Text('Load More'),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      child: const Center(
+                        child: Text(
+                          'No more orders to load',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    );
+                  }
+                });
+              }
+            },
           ),
         );
       }),
