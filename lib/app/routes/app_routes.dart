@@ -8,6 +8,7 @@ abstract class Routes {
   static const ORDERS = _Paths.ORDERS;
   static const TRANSACTIONS = _Paths.TRANSACTIONS;
   static const SPLASH = _Paths.SPLASH;
+  static const ALL_ORDERS = _Paths.ALL_ORDERS;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const ORDERS = '/orders';
   static const TRANSACTIONS = '/transactions';
   static const SPLASH = '/splash';
+  static const ALL_ORDERS = '/all-orders';
 }

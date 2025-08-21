@@ -31,8 +31,8 @@ class OrdersController extends GetxController {
 
   Future<void> getOrderList() async {
     isLoading.value = true;
-    orderList.clear();
     var response = await OrderRepository().getOrderData();
+    orderList.clear();
     orderList.addAll(response.data ?? []);
     isLoading.value = false;
   }

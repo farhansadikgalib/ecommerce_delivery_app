@@ -1,3 +1,5 @@
+import 'package:delivery_app/app/modules/all_orders/bindings/all_orders_binding.dart';
+import 'package:delivery_app/app/modules/all_orders/views/all_orders_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
@@ -44,5 +46,12 @@ class AppPages {
       page: () => const SplashView(),
       binding: SplashBinding(),
     ),
+
+    GetPage(
+      name: _Paths.ALL_ORDERS,
+      page: () => const AllOrdersView(),
+      binding: AllOrdersBinding(),
+    ),
+
   ];
 }

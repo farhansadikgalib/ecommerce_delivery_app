@@ -240,7 +240,56 @@ class HomeView extends GetView<HomeController> {
 
             AppWidgets().gapH16(),
 
+            // All Orders Card
+            InkWell(
+              onTap: () => {
+                if(controller.deliveryStatus.value){
+                  Get.toNamed(Routes.ALL_ORDERS),
+                } else {
+                  AppWidgets().getSnackBar(
+                    message: 'Please enable delivery status first.',
+                  ),
+                }
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 30,
+                    horizontal: 16,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.list_alt,
+                        color: AppColors.primaryColor,
+                        size: 28,
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        'All Orders',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.primaryColor,
+                        size: 28,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
+            AppWidgets().gapH16(),
 
             // Your Order Card
             InkWell(
@@ -268,7 +317,7 @@ class HomeView extends GetView<HomeController> {
                   child: Row(
                     children: [
                       Icon(
-                        Icons.shopping_bag,
+                        Icons.account_balance_wallet,
                         color: AppColors.primaryColor,
                         size: 28,
                       ),
