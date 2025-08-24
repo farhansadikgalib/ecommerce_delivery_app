@@ -13,6 +13,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.onInit();
     return Scaffold(
       backgroundColor: AppColors.secondaryColor,
       body: SingleChildScrollView(

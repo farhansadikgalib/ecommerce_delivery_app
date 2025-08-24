@@ -1,4 +1,7 @@
 import 'package:delivery_app/app/core/helper/app_widgets.dart';
+import 'package:delivery_app/app/core/helper/print_log.dart';
+import 'package:delivery_app/app/core/helper/shared_value_helper.dart';
+import 'package:delivery_app/app/data/repository/home/home_repository.dart';
 import 'package:delivery_app/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,24 +15,20 @@ class HomeController extends GetxController {
     getDeliveryStatus();
   }
 
-  Future<void> getDeliveryStatus() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      deliveryStatus.value = prefs.getBool('delivery_status') ?? false;
-    } catch (e) {
-      deliveryStatus.value = false;
-    }
+  void getDeliveryStatus() {
+    deliveryStatus.value = userStatus.$;
+
+    printLog(userStatus.$.toString());
   }
 
   Future<void> setDeliveryStatus() async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('delivery_status', deliveryStatus.value);
-
-      String message = deliveryStatus.value
-          ? 'Delivery status enabled'
-          : 'Delivery status disabled';
-      AppWidgets().getSnackBar(message: message);
+      userStatus.$ = !deliveryStatus.value;
+      userStatus.save();
+      var response = await HomeRepository().userStatus(
+        userStatus.$ ? '1' : '0',
+      );
+      AppWidgets().getSnackBar(message: response.message);
     } catch (e) {
       AppWidgets().getSnackBar(message: 'Error updating delivery status');
     }
@@ -42,7 +41,6 @@ class HomeController extends GetxController {
 
       AppWidgets().getSnackBar(message: 'Logged out successfully');
 
-      // Navigate to login screen
       Get.offAllNamed(Routes.LOGIN);
     } catch (e) {
       AppWidgets().getSnackBar(message: 'Error during logout');
