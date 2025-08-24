@@ -12,6 +12,9 @@ class AuthHelper {
       isLoggedIn.$ = true;
       isLoggedIn.save();
 
+      userStatus.$ = loginResponse.user?.status=='1'?true:false;
+      userStatus.save();
+
       accessToken.$ = "Bearer ${loginResponse.token}";
       accessToken.save();
 
@@ -25,12 +28,17 @@ class AuthHelper {
       userEmail.save();
 
 
+
+
     }
   }
 
   void clearUserData() {
     isLoggedIn.$ = false;
     isLoggedIn.save();
+
+    userStatus.$ = false;
+    userStatus.save();
 
     accessToken.$ = "";
     accessToken.save();
@@ -46,10 +54,12 @@ class AuthHelper {
     userEmail.$ = "";
     userEmail.save();
 
+
   }
 
    loadItems() {
     isLoggedIn.load();
+    userStatus.load();
     accessToken.load();
     userName.load();
     userId.load();
