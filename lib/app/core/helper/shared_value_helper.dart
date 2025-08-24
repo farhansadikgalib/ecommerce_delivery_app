@@ -4,6 +4,11 @@ final SharedValue<bool> isLoggedIn = SharedValue(
   value: false,
   key: "isLoggedIn",
 );
+
+final SharedValue<bool> userStatus = SharedValue(
+  value: false,
+  key: "userStatus",
+);
 final SharedValue<String> accessToken = SharedValue(
   value: "",
   key: "accessToken",
@@ -21,7 +26,7 @@ final SharedValue<String> userName = SharedValue(
 
 final SharedValue<String> userId = SharedValue(
   value: "",
-  key: "staffID",
+  key: "userId",
 );
 
 final SharedValue<String> userRole = SharedValue(
@@ -29,15 +34,4 @@ final SharedValue<String> userRole = SharedValue(
   key: "userRole",
 );
 
-final SharedValue<bool> isManager = SharedValue(
-  value: false,
-  key: "isManager",
-);
-final SharedValue<bool> isSupervisor = SharedValue(
-  value: false,
-  key: "isSupervisor",
-);
-final SharedValue<bool> isOperator = SharedValue(
-  value: false,
-  key: "isOperator",
-);
+
