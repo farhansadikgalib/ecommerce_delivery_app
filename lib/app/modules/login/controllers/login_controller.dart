@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:delivery_app/app/routes/app_pages.dart';
 
@@ -29,11 +28,7 @@ class LoginController extends GetxController {
   final defaultPinTheme = PinTheme(
     width: 50,
     height: 50,
-    textStyle: GoogleFonts.poppins(
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-      color: AppColors.primaryColor,
-    ),
+
     decoration: BoxDecoration(
       color: const Color.fromRGBO(232, 235, 241, 0.37),
       borderRadius: BorderRadius.circular(8),

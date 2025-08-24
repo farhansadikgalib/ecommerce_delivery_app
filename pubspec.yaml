@@ -16,7 +16,6 @@ dependencies:
   dio:
   flutter_easyloading:
   flutter_screenutil:
-  google_fonts:
   logger:
   connectivity_plus: ^4.0.2
   url_launcher:

@@ -4,11 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_value/shared_value.dart';
 
 import 'app/core/binding/initial_binding.dart';
-import 'app/core/config/app_config.dart';
 import 'app/core/style/app_colors.dart';
 import 'app/routes/app_pages.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -43,9 +41,6 @@ Future<void> main() async {
               primaryColor: AppColors.primaryColor,
               useMaterial3: false,
               scaffoldBackgroundColor: Colors.white,
-              textTheme: GoogleFonts.robotoTextTheme(
-                Theme.of(context).textTheme,
-              ),
               inputDecorationTheme: const InputDecorationTheme(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
