@@ -32,7 +32,7 @@ Future<void> main() async {
 
         return SharedValue.wrapApp(
           GetMaterialApp(
-            title: "Delivery App",
+            title: "OB Delivery",
             debugShowCheckedModeBanner: false,
             initialRoute: AppPages.INITIAL,
             initialBinding: InitialBinding(),

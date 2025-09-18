@@ -1,3 +1,5 @@
+import 'package:any_image_view/any_image_view.dart';
+import 'package:delivery_app/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +33,7 @@ class LoginView extends GetView<LoginController> {
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 500),
                         height: controller.isSignUpMode.value ? 100.h : 120.h,
-                        child: FlutterLogo(size: 75,)
+                        child: AnyImageView(imagePath: Assets.pngLogo,)
                       ),
                     ),
 
