@@ -663,6 +663,7 @@ class TransactionsView extends GetView<TransactionsController> {
                                   Get.back();
                                 },
                                 rightButtonOnTap: () {
+                                  Get.back();
                                   controller.transferAmount(
                                     transaction.id.toString(),
                                     transaction.receiveAmount ?? "0",
