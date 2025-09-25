@@ -12,7 +12,7 @@ class SplashController extends GetxController {
     initializeApp();
   }
 
-  initializeApp() async {
+  Future<void> initializeApp() async {
     await AuthHelper().loadItems();
     await Future.delayed(2500.milliseconds);
     await isLoggedIn.load().whenComplete(() async {
