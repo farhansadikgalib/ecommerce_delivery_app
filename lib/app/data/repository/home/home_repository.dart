@@ -1,3 +1,4 @@
+import 'package:delivery_app/app/data/model/home/delivery_dashboard_response.dart';
 import 'package:delivery_app/app/data/model/home/delivery_status_response.dart';
 import '../../../network_service/api_client.dart';
 import '../../../network_service/api_end_points.dart';
@@ -13,5 +14,16 @@ class HomeRepository {
     );
 
     return deliveryStatusResponseFromJson(response.toString());
+  }
+
+  Future<DeliveryDashboardResponse> dashboardData() async {
+    var response = await ApiClient().get(
+      ApiEndPoints.dashboardData,
+      dashboardData,
+      isHeaderRequired: true,
+      isLoaderRequired: true,
+    );
+
+    return deliveryDashboardResponseFromJson(response.toString());
   }
 }

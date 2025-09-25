@@ -8,10 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
   final deliveryStatus = false.obs;
+  final dailyDelivery = '0'.obs;
+  final monthlyDelivery = '0'.obs;
 
   @override
   void onInit() {
     super.onInit();
+    getDeliveryData();
     getDeliveryStatus();
   }
 
@@ -20,6 +23,14 @@ class HomeController extends GetxController {
 
     printLog(userStatus.$.toString());
   }
+
+
+  Future<void> getDeliveryData() async {
+    var response = await HomeRepository().dashboardData();
+    dailyDelivery.value = response.todayDeliveryAmount.toString();
+    monthlyDelivery.value = response.monthlyDeliveryAmount.toString();
+  }
+
 
   Future<void> setDeliveryStatus() async {
     try {
