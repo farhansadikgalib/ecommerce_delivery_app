@@ -3,7 +3,7 @@ class Assets {
   Assets._();
 
   static const String deliveryApp = '.env';
+  static const String logoIcon = 'assets/logo/icon.png';
   static const String pngLogo = 'assets/png/logo.png';
-  static const String pngOusadbazar1 = 'assets/png/icon.png';
 
 }
