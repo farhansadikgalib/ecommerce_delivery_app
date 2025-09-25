@@ -38,7 +38,7 @@ class Sale {
   String? subTotal;
   String? total;
   String? paidAmount;
-  String? amountDue;
+  dynamic amountDue;
   String? commentOnReceipt;
   dynamic createdBy;
   String? createdAt;

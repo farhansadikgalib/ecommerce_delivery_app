@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 DeliveryOrderResponse deliveryOrderResponseFromJson(String str) => DeliveryOrderResponse.fromJson(json.decode(str));
@@ -74,7 +75,7 @@ class DeliveryOrderResponse {
 
 class OrderData {
   int? id;
-  dynamic customerId;
+  String? customerId;
   String? paymentMethodId;
   String? saleDate;
   dynamic itemTiers;
@@ -84,7 +85,7 @@ class OrderData {
   String? paidAmount;
   String? amountDue;
   String? commentOnReceipt;
-  dynamic createdBy;
+  String? createdBy;
   String? createdAt;
   String? updatedAt;
   dynamic branchId;
@@ -94,21 +95,20 @@ class OrderData {
   dynamic discountReason;
   dynamic itemTire;
   String? verifyStatus;
-  dynamic verifiedBy;
-  dynamic verifiedAt;
+  String? verifiedBy;
+  String? verifiedAt;
   dynamic suspendedBy;
   dynamic customerName;
   String? suspendRequest;
   dynamic suspendRequestBy;
-  dynamic shippingCost;
+  String? shippingCost;
   String? deliveryManId;
   String? deliveryStatus;
   dynamic deliveryRejectReason;
   dynamic deliveredAt;
   List<SaleProduct>? saleProducts;
   PaymentMethod? paymentMethod;
-  dynamic soldUser;
-  dynamic customer;
+  SoldUser? soldUser;
   BillingAddress? billingAddress;
 
   OrderData({
@@ -147,7 +147,6 @@ class OrderData {
     this.saleProducts,
     this.paymentMethod,
     this.soldUser,
-    this.customer,
     this.billingAddress,
   });
 
@@ -186,8 +185,7 @@ class OrderData {
     deliveredAt: json["delivered_at"],
     saleProducts: json["sale_products"] == null ? [] : List<SaleProduct>.from(json["sale_products"]!.map((x) => SaleProduct.fromJson(x))),
     paymentMethod: json["payment_method"] == null ? null : PaymentMethod.fromJson(json["payment_method"]),
-    soldUser: json["sold_user"],
-    customer: json["customer"],
+    soldUser: json["sold_user"] == null ? null : SoldUser.fromJson(json["sold_user"]),
     billingAddress: json["billing_address"] == null ? null : BillingAddress.fromJson(json["billing_address"]),
   );
 
@@ -226,8 +224,7 @@ class OrderData {
     "delivered_at": deliveredAt,
     "sale_products": saleProducts == null ? [] : List<dynamic>.from(saleProducts!.map((x) => x.toJson())),
     "payment_method": paymentMethod?.toJson(),
-    "sold_user": soldUser,
-    "customer": customer,
+    "sold_user": soldUser?.toJson(),
     "billing_address": billingAddress?.toJson(),
   };
 }
@@ -238,12 +235,17 @@ class BillingAddress {
   String? fullName;
   String? mobile;
   String? address;
-  dynamic countryId;
+  String? countryId;
   String? cityId;
   dynamic notes;
   String? createdAt;
   String? updatedAt;
   dynamic deletedAt;
+  String? areaId;
+  dynamic customerAddressId;
+  Area? country;
+  Area? city;
+  Area? area;
 
   BillingAddress({
     this.id,
@@ -257,6 +259,11 @@ class BillingAddress {
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
+    this.areaId,
+    this.customerAddressId,
+    this.country,
+    this.city,
+    this.area,
   });
 
   factory BillingAddress.fromJson(Map<String, dynamic> json) => BillingAddress(
@@ -271,6 +278,11 @@ class BillingAddress {
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     deletedAt: json["deleted_at"],
+    areaId: json["area_id"],
+    customerAddressId: json["customer_address_id"],
+    country: json["country"] == null ? null : Area.fromJson(json["country"]),
+    city: json["city"] == null ? null : Area.fromJson(json["city"]),
+    area: json["area"] == null ? null : Area.fromJson(json["area"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -285,6 +297,67 @@ class BillingAddress {
     "created_at": createdAt,
     "updated_at": updatedAt,
     "deleted_at": deletedAt,
+    "area_id": areaId,
+    "customer_address_id": customerAddressId,
+    "country": country?.toJson(),
+    "city": city?.toJson(),
+    "area": area?.toJson(),
+  };
+}
+
+class Area {
+  int? id;
+  String? cityId;
+  String? name;
+  String? status;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic deletedAt;
+  dynamic createdBy;
+  dynamic updatedBy;
+  dynamic deletedBy;
+  String? countryId;
+
+  Area({
+    this.id,
+    this.cityId,
+    this.name,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.createdBy,
+    this.updatedBy,
+    this.deletedBy,
+    this.countryId,
+  });
+
+  factory Area.fromJson(Map<String, dynamic> json) => Area(
+    id: json["id"],
+    cityId: json["city_id"],
+    name: json["name"],
+    status: json["status"],
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+    deletedAt: json["deleted_at"],
+    createdBy: json["created_by"],
+    updatedBy: json["updated_by"],
+    deletedBy: json["deleted_by"],
+    countryId: json["country_id"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "city_id": cityId,
+    "name": name,
+    "status": status,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
+    "deleted_at": deletedAt,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "deleted_by": deletedBy,
+    "country_id": countryId,
   };
 }
 
@@ -409,6 +482,74 @@ class SaleProduct {
     "pack_size_id": packSizeId,
     "pack_size_quantity": packSizeQuantity,
     "total_quantity": totalQuantity,
+  };
+}
+
+class SoldUser {
+  int? id;
+  String? name;
+  String? email;
+  dynamic emailVerifiedAt;
+  String? status;
+  String? createdAt;
+  String? updatedAt;
+  dynamic branchId;
+  String? userType;
+  dynamic username;
+  String? phone;
+  dynamic dob;
+  dynamic gender;
+  dynamic address;
+
+  SoldUser({
+    this.id,
+    this.name,
+    this.email,
+    this.emailVerifiedAt,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.branchId,
+    this.userType,
+    this.username,
+    this.phone,
+    this.dob,
+    this.gender,
+    this.address,
+  });
+
+  factory SoldUser.fromJson(Map<String, dynamic> json) => SoldUser(
+    id: json["id"],
+    name: json["name"],
+    email: json["email"],
+    emailVerifiedAt: json["email_verified_at"],
+    status: json["status"],
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+    branchId: json["branch_id"],
+    userType: json["user_type"],
+    username: json["username"],
+    phone: json["phone"],
+    dob: json["dob"],
+    gender: json["gender"],
+    address: json["address"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "email": email,
+    "email_verified_at": emailVerifiedAt,
+    "status": status,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
+    "branch_id": branchId,
+    "user_type": userType,
+    "username": username,
+    "phone": phone,
+    "dob": dob,
+    "gender": gender,
+    "address": address,
   };
 }
 
