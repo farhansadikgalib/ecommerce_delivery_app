@@ -6,17 +6,32 @@ import 'package:get/get.dart';
 
 class AllOrdersController extends GetxController {
   final orderList = <OrderData>[].obs;
+  final filteredOrderList = <OrderData>[].obs;
   final isLoading = false.obs;
   final isLoadingMore = false.obs;
   final hasMoreData = true.obs;
+  final selectedStatus = Rxn<String>(); // null means "All"
   int page = 1;
   final ScrollController scrollController = ScrollController();
+
+  // Status mapping for display
+  final statusOptions = <String, String>{
+    'all': 'All Orders',
+    '0': 'Ready',
+    '1': 'Picked',
+    '2': 'On Route',
+    '3': 'Delivered',
+    '4': 'Undelivered',
+  };
 
   @override
   void onInit() {
     super.onInit();
     getOrderList();
     _setupScrollListener();
+
+    // Listen to selectedStatus changes and apply filter
+    ever(selectedStatus, (_) => _applyFilter());
   }
 
   void _setupScrollListener() {
@@ -39,6 +54,7 @@ class AllOrdersController extends GetxController {
       var response = await OrderRepository().getAllOrderData(page);
 
       orderList.addAll(response.data ?? []);
+      _applyFilter();
 
       // Check if there's more data
       if ((response.data?.length ?? 0) < 10) {
@@ -63,6 +79,7 @@ class AllOrdersController extends GetxController {
 
       if (response.data != null && response.data!.isNotEmpty) {
         orderList.addAll(response.data!);
+        _applyFilter();
 
         // Check if there's more data
         if (response.data!.length < 10) {
@@ -81,6 +98,36 @@ class AllOrdersController extends GetxController {
       isLoadingMore.value = false;
     }
   }
+
+  void _applyFilter() {
+    if (selectedStatus.value == null || selectedStatus.value == 'all') {
+      filteredOrderList.assignAll(orderList);
+    } else {
+      filteredOrderList.assignAll(
+        orderList
+            .where((order) => order.deliveryStatus == selectedStatus.value)
+            .toList(),
+      );
+    }
+  }
+
+  void filterByStatus(String? status) {
+    selectedStatus.value = status;
+  }
+
+  void clearFilter() {
+    selectedStatus.value = null;
+  }
+
+  String get currentFilterText {
+    if (selectedStatus.value == null || selectedStatus.value == 'all') {
+      return 'All Orders';
+    }
+    return statusOptions[selectedStatus.value] ?? 'Unknown Status';
+  }
+
+  bool get hasActiveFilter =>
+      selectedStatus.value != null && selectedStatus.value != 'all';
 
   @override
   void onClose() {
