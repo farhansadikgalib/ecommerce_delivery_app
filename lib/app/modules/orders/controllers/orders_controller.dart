@@ -3,6 +3,7 @@ import 'package:delivery_app/app/data/model/order/order_data_response.dart';
 import 'package:delivery_app/app/data/repository/order/order_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrdersController extends GetxController {
   final orderList = <OrderData>[].obs;
@@ -53,8 +54,6 @@ class OrdersController extends GetxController {
       orderList.clear();
       var response = await OrderRepository().getPendingOrderData(page);
       orderList.addAll(response.data ?? []);
-
-      // Check if there's more data (assuming 20 items per page based on API)
       if ((response.data?.length ?? 0) < 20) {
         hasMoreData.value = false;
       }
@@ -100,8 +99,9 @@ class OrdersController extends GetxController {
       amount,
     );
     if (response.status == "success") {
-      AppWidgets().getSnackBar(message: response.message);
+      isLoading.value = true;
       getOrderList();
+      AppWidgets().getSnackBar(message: response.message);
     }
   }
 
@@ -117,4 +117,28 @@ class OrdersController extends GetxController {
     scrollController.dispose();
     super.onClose();
   }
+
+ void openGoogleMap(String locationName) async {
+   final encodedLocation = Uri.encodeComponent(locationName);
+   final String googleMapsUrl =
+       'https://www.google.com/maps/search/?api=1&query=$encodedLocation';
+   final String googleMapsAppUrl = 'comgooglemaps://?q=$encodedLocation';
+
+   try {
+     if (await canLaunchUrl(Uri.parse(googleMapsAppUrl))) {
+       await launchUrl(Uri.parse(googleMapsAppUrl));
+     } else {
+       await launchUrl(
+         Uri.parse(googleMapsUrl),
+         mode: LaunchMode.externalApplication,
+       );
+     }
+   } catch (e) {
+     Get.snackbar(
+       'Error'.tr,
+       'Could not open Google Maps'.tr,
+       snackPosition: SnackPosition.BOTTOM,
+     );
+   }
+ }
 }
