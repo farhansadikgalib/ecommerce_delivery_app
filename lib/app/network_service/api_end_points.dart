@@ -9,6 +9,12 @@ class ApiEndPoints {
 
   //Authentication
 
+  //Dashboard
+
+  static String dashboardData = "delivery/dashboard";
+  //Dashboard
+
+
   //delivery status
   static String deliveryStatus = "delivery/status-update";
 
