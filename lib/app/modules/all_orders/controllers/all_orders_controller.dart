@@ -103,11 +103,24 @@ class AllOrdersController extends GetxController {
     if (selectedStatus.value == null || selectedStatus.value == 'all') {
       filteredOrderList.assignAll(orderList);
     } else {
-      filteredOrderList.assignAll(
-        orderList
-            .where((order) => order.deliveryStatus == selectedStatus.value)
-            .toList(),
-      );
+      if (selectedStatus.value == '0') {
+        // Ready status includes both '0' and null values
+        filteredOrderList.assignAll(
+          orderList
+              .where(
+                (order) =>
+                    order.deliveryStatus == '0' || order.deliveryStatus == null,
+              )
+              .toList(),
+        );
+      } else {
+        // For other statuses, use exact match
+        filteredOrderList.assignAll(
+          orderList
+              .where((order) => order.deliveryStatus == selectedStatus.value)
+              .toList(),
+        );
+      }
     }
   }
 
