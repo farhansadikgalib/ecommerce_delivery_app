@@ -33,7 +33,8 @@ class LoginView extends GetView<LoginController> {
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 500),
                         height: controller.isSignUpMode.value ? 100.h : 120.h,
-                        child: AnyImageView(imagePath: Assets.pngLogo,)
+                        child: AnyImageView(imagePath: Assets.logoIcon,
+                          borderRadius: BorderRadius.circular(20),)
                       ),
                     ),
 
